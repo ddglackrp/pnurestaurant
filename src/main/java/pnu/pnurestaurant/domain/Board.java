@@ -1,12 +1,17 @@
 package pnu.pnurestaurant.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
+import static lombok.AccessLevel.PRIVATE;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
+@Builder
+@Getter
+@AllArgsConstructor(access = PRIVATE)
 public class Board extends TimeStamp{
 
     @Id
@@ -17,11 +22,18 @@ public class Board extends TimeStamp{
     @JoinColumn(name = "RESTAURANT_ID")
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "board")
-    private List<Restaurant> restaurants = new ArrayList<>();
+    private Double googleRating;
+    private Double kakaoRating;
+    private Double studentRating;
 
-    private Float googleRating;
-    private Float kakaoRating;
-    private Float studentRating;
+    public Board() {
+    }
+
+    /**
+     * 연관관계 편의 메소드
+     */
+    public void setRelationRestaurant(Restaurant restaurant){
+        this.restaurant = restaurant;
+    }
 
 }
