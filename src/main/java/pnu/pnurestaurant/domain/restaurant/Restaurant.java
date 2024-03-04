@@ -1,8 +1,16 @@
 package pnu.pnurestaurant.domain.restaurant;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+
+import static lombok.AccessLevel.PRIVATE;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor(access = PRIVATE)
 public class Restaurant {
 
     @Id
@@ -18,5 +26,8 @@ public class Restaurant {
     private Address address;
 
     private String restaurantPictureUrl;
+
+    public Restaurant() {
+    }
 
 }
