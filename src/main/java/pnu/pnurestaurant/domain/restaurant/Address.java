@@ -2,8 +2,10 @@ package pnu.pnurestaurant.domain.restaurant;
 
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 
 @Embeddable
+@Getter
 public class Address {
 
     private String latitude; // 위도

@@ -2,6 +2,7 @@ package pnu.pnurestaurant.domain;
 
 
 import jakarta.persistence.*;
+import pnu.pnurestaurant.domain.restaurant.Restaurant;
 
 @Entity
 public class Review extends TimeStamp{
@@ -11,16 +12,18 @@ public class Review extends TimeStamp{
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOARD_ID")
-    private Board board;
+    @JoinColumn(name = "RESTAURANT_ID")
+    private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    private Float rating;
+    private Double rating;
 
     private String content;
 
     private String reviewPictureUrl;
+
+
 }

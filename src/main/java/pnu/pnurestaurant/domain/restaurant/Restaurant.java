@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import pnu.pnurestaurant.domain.Review;
+import pnu.pnurestaurant.domain.TimeStamp;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -11,7 +16,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Getter
 @Builder
 @AllArgsConstructor(access = PRIVATE)
-public class Restaurant {
+public class Restaurant extends TimeStamp {
 
     @Id
     @GeneratedValue
@@ -25,7 +30,15 @@ public class Restaurant {
     @Embedded
     private Address address;
 
+    @OneToMany(mappedBy = "restaurant")
+    private List<Review> reviews = new ArrayList<>();
+
+
+    private Double googleRating;
+    private Double kakaoRating;
+    private Double studentRating;
     private String restaurantPictureUrl;
+
 
     public Restaurant() {
     }
