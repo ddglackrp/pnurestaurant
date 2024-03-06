@@ -1,15 +1,15 @@
 package pnu.pnurestaurant.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 @Controller
-@RequestMapping("/")
+@RequiredArgsConstructor
 public class HomeController {
 
-    @GetMapping
+    @GetMapping("/")
     public String home(){
-        return "/restaurant/foodTypeList";
+        return "login/loginForm";
     }
+
 }

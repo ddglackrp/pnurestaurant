@@ -19,6 +19,11 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
+    @GetMapping("")
+    public String restaurant(){
+        return "restaurant/foodTypeList";
+    }
+
     @GetMapping("/name")
     public String restaurantList(@RequestParam("foodname") String foodName, Model model){
         List<Restaurant> restaurants = restaurantService.findRestaurantsByName(foodName);
