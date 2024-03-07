@@ -28,6 +28,21 @@ public class RestaurantService {
         return restaurantRepository.findByName(name);
     }
 
+    public Restaurant findOne(Long id){
+        return restaurantRepository.findById(id);
+    }
+
+    public Restaurant findOneWithReviews(Long id){
+        return restaurantRepository.findByIdWithReview(id);
+    }
+
+    @Transactional
+    public Long updateRating(Long id, Double rating){
+        Restaurant findRestaurant = restaurantRepository.findById(id);
+        findRestaurant.changeStudentRating(rating);
+        return id;
+    }
+
 
 
 }
