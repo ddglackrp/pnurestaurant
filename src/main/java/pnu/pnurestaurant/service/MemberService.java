@@ -14,9 +14,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Member join(Member member, String password){
-        member.setPassword(password);
-        member.setRole("ROLE_USER");
+    public Member join(Member member){
         memberRepository.save(member);
         return member;
     }
