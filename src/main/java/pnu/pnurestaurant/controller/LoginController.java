@@ -1,10 +1,12 @@
 package pnu.pnurestaurant.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pnu.pnurestaurant.Dto.MemberDto;
+import pnu.pnurestaurant.Dto.MemberJoinDto;
 import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.service.MemberService;
 
@@ -33,12 +35,20 @@ public class LoginController {
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute MemberDto memberDto){
-        Member member = new Member();
-        member.setMemberId(memberDto.getMemberId());
-        member.setPassword(memberDto.getPassword());
-        member.setEmail(memberDto.getEmail());
-        memberService.join(member, bCryptPasswordEncoder.encode(member.getPassword()));
+    public String join(@ModelAttribute @Valid MemberJoinDto memberJoinDto, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "login/joinForm";
+        }
+
+        Member member = Member.builder()
+                .memberId(memberJoinDto.getMemberId())
+                .password(bCryptPasswordEncoder.encode(memberJoinDto.getPassword()))
+                .email(memberJoinDto.getEmail())
+                .role("ROLE_USER")
+                .build();
+
+        memberService.join(member);
         return "redirect:/";
     }
 
