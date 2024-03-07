@@ -1,26 +1,32 @@
 package pnu.pnurestaurant.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import pnu.pnurestaurant.Dto.ReviewDto;
+import pnu.pnurestaurant.auth.PrincipalDetails;
+import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
 import pnu.pnurestaurant.service.RestaurantService;
+import pnu.pnurestaurant.service.ReviewService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/restaurants")
 @RequiredArgsConstructor
+@Slf4j
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
     @GetMapping("")
-    public String restaurant(){
+    public String restaurants(){
         return "restaurant/foodTypeList";
     }
 
@@ -58,6 +64,26 @@ public class RestaurantController {
         model.addAttribute("restaurants", restaurants);
         return "restaurant/restaurantList";
     }
+
+    @GetMapping("/{restaurantId}")
+    public String restaurant(@PathVariable("restaurantId") Long restaurantId, Model model){
+
+        Restaurant findRestaurant = restaurantService.findOneWithReviews(restaurantId);
+
+        model.addAttribute("restaurant", findRestaurant);
+
+        List<Review> reviews = findRestaurant.getReviews();
+        if(!reviews.isEmpty()){
+            List<ReviewDto> reviewDtos = findRestaurant.getReviews().stream()
+                    .map(r -> new ReviewDto(r))
+                    .collect(Collectors.toList());
+
+            model.addAttribute("reviews",reviewDtos);
+        }
+
+        return "restaurant/restaurantInfo";
+    }
+
 
 
 

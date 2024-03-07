@@ -2,6 +2,7 @@ package pnu.pnurestaurant.repository;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
@@ -12,6 +13,7 @@ import java.util.List;
 @Repository
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class RestaurantRepository {
 
     private final EntityManager em;
@@ -22,7 +24,7 @@ public class RestaurantRepository {
         return restaurant.getId();
     }
 
-    public Restaurant findOne(Long id){
+    public Restaurant findById(Long id){
         return em.find(Restaurant.class, id);
     }
 
@@ -41,6 +43,16 @@ public class RestaurantRepository {
         return em.createQuery("select r from Restaurant r where r.foodType = :foodType", Restaurant.class)
                 .setParameter("foodType", foodType)
                 .getResultList();
+    }
+
+    public Restaurant findByIdWithReview(Long id){
+        Restaurant restaurant = em.createQuery("select r from Restaurant r" +
+                " left join fetch r.reviews" +
+                " where r.id = :id", Restaurant.class)
+                .setParameter("id",id)
+                .getSingleResult();
+
+        return restaurant;
     }
 
 }
