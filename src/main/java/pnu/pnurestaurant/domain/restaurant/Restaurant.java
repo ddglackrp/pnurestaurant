@@ -43,4 +43,8 @@ public class Restaurant extends TimeStamp {
     public Restaurant() {
     }
 
+    public void changeStudentRating(Double rating){
+        this.studentRating = rating;
+    }
+
 }
