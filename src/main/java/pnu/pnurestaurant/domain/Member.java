@@ -1,26 +1,35 @@
 package pnu.pnurestaurant.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
+@Builder
 public class Member {
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(unique = true)
     private String memberId;
+
     private String password;
     private String email;
     private String role;
 
     public Member() {
     }
+
+    private Member(Long id, String memberId, String password, String email, String role) {
+        this.id = id;
+        this.memberId = memberId;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
+
 
 }
