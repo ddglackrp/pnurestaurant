@@ -2,6 +2,7 @@ package pnu.pnurestaurant.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -29,8 +30,8 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(authorize ->
                 authorize
-                        .requestMatchers("/admin/**").hasAnyRole("hasRole('ROLE_ADMIN')")
-                        .requestMatchers("/restaurants/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/restaurants/**").hasAnyRole("ADMIN","USER")
                         .anyRequest().permitAll()
         );
         http.formLogin(f -> {
@@ -40,7 +41,6 @@ public class SecurityConfig {
                     .usernameParameter("memberId");
                 }
         );
-
 
         return http.build();
     }
