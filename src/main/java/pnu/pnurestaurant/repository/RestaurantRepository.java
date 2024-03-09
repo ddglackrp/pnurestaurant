@@ -47,7 +47,8 @@ public class RestaurantRepository {
 
     public Restaurant findByIdWithReview(Long id){
         Restaurant restaurant = em.createQuery("select r from Restaurant r" +
-                " left join fetch r.reviews" +
+                " left join fetch r.reviews rr" +
+                " left join fetch rr.member" +
                 " where r.id = :id", Restaurant.class)
                 .setParameter("id",id)
                 .getSingleResult();

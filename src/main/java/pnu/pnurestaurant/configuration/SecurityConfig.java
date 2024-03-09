@@ -32,6 +32,7 @@ public class SecurityConfig {
                 authorize
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/restaurants/**").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/review/**").hasAnyRole("ADMIN","USER")
                         .anyRequest().permitAll()
         );
         http.formLogin(f -> {

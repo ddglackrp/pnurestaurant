@@ -21,11 +21,18 @@
 <div th:each="review : ${reviews}">
     <p>평점: <span th:text="${review.rating}"></span></p>
     <p>리뷰 내용: <span th:text="${review.content}"></span></p>
+    <div th:if="${review.member.id == UserId}">
+        <a th:href="@{/review/edit/{reviewId}(reviewId=${review.id})}">수정</a>
+        <form th:action="@{/review/delete/{reviewId}(reviewId=${review.id})}" method="POST">
+            <input type="hidden" name="restaurantId" th:value="${restaurant.id}">
+            <button type="submit">삭제</button>
+        </form>
+    </div>
     <hr>
 </div>
 
 <h2>리뷰 작성</h2>
-<form th:action method="POST">
+<form th:action="@{/review/add/{restaurantId}(restaurantId=${restaurant.id})}" method="POST">
     <input type="hidden" name="restaurantId" th:value="${restaurant.id}">
     <div>
         <label for="rating">평점:</label>

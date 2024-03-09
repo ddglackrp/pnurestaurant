@@ -12,7 +12,6 @@ import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
 import pnu.pnurestaurant.service.RestaurantService;
-import pnu.pnurestaurant.service.ReviewService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -66,7 +65,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/{restaurantId}")
-    public String restaurant(@PathVariable("restaurantId") Long restaurantId, Model model){
+    public String restaurant(@PathVariable("restaurantId") Long restaurantId,
+                             @AuthenticationPrincipal PrincipalDetails principalDetails,
+                             Model model){
 
         Restaurant findRestaurant = restaurantService.findOneWithReviews(restaurantId);
 
@@ -80,6 +81,8 @@ public class RestaurantController {
 
             model.addAttribute("reviews",reviewDtos);
         }
+
+        model.addAttribute("UserId", principalDetails.getMember().getId());
 
         return "restaurant/restaurantInfo";
     }

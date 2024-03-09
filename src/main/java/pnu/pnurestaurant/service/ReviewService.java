@@ -17,4 +17,23 @@ public class ReviewService {
     public Long saveReview(Review review){
         return reviewRepository.save(review);
     }
+
+    public Review findOne(Long id){
+        return reviewRepository.findById(id);
+    }
+
+    public Review findOneFetchAll(Long id){
+        return reviewRepository.findByIdtoOne(id);
+    }
+
+    @Transactional
+    public void updateReview(Long id, String content){
+        Review findReview = reviewRepository.findById(id);
+        findReview.changeContent(content);
+    }
+
+    @Transactional
+    public void deleteReview(Long id){
+        reviewRepository.deleteById(id);
+    }
 }

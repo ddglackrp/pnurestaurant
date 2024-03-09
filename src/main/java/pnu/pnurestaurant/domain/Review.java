@@ -54,5 +54,9 @@ public class Review extends TimeStamp{
         restaurant.getReviews().add(this);
     }
 
+    public void changeContent(String content){
+        this.content = content;
+    }
+
 
 }
