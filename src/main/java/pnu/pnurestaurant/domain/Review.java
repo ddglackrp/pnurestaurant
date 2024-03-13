@@ -8,9 +8,7 @@ import pnu.pnurestaurant.domain.restaurant.Restaurant;
 
 @Entity
 @Getter
-@Builder
 public class Review extends TimeStamp{
-
     @Id
     @GeneratedValue
     private Long id;
@@ -31,11 +29,8 @@ public class Review extends TimeStamp{
 
     public Review() {
     }
-
-    private Review(Long id, Restaurant restaurant, Member member, Double rating, String content, String reviewPictureUrl) {
-        this.id = id;
-        this.restaurant = restaurant;
-        this.member = member;
+    @Builder
+    public Review(Double rating, String content, String reviewPictureUrl) {
         this.rating = rating;
         this.content = content;
         this.reviewPictureUrl = reviewPictureUrl;

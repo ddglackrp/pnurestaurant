@@ -2,6 +2,7 @@ package pnu.pnurestaurant.domain.restaurant;
 
 
 import jakarta.persistence.Embeddable;
+import lombok.Builder;
 import lombok.Getter;
 
 @Embeddable
@@ -22,6 +23,7 @@ public class Address {
         this.longitude = longitude;
     }
 
+    @Builder
     public Address(String locationId) {
         this.locationId = locationId;
     }

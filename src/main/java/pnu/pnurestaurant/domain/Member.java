@@ -5,7 +5,6 @@ import lombok.*;
 
 @Entity
 @Getter
-@Builder
 public class Member {
 
     @Id
@@ -22,14 +21,11 @@ public class Member {
     public Member() {
     }
 
-    private Member(Long id, String memberId, String password, String email, String role) {
-        this.id = id;
+    @Builder
+    public Member(String memberId, String password, String email, String role) {
         this.memberId = memberId;
         this.password = password;
         this.email = email;
         this.role = role;
     }
-
-
-
 }
