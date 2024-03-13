@@ -33,7 +33,7 @@ public class RestaurantRepository {
                 .getResultList();
     }
 
-    public List<Restaurant> findByName(String name){
+    public List<Restaurant> findByNameLike(String name){
         return em.createQuery("select r from Restaurant r where r.name like concat('%', :name, '%')", Restaurant.class)
                 .setParameter("name", name)
                 .getResultList();
@@ -45,15 +45,18 @@ public class RestaurantRepository {
                 .getResultList();
     }
 
-    public Restaurant findByIdWithReview(Long id){
-        Restaurant restaurant = em.createQuery("select r from Restaurant r" +
-                " left join fetch r.reviews rr" +
-                " left join fetch rr.member" +
-                " where r.id = :id", Restaurant.class)
-                .setParameter("id",id)
-                .getSingleResult();
+    public Restaurant findByIdWithReviewAndMember(Long id){
+        List<Restaurant> restaurants = em.createQuery("select r from Restaurant r" +
+                        " left join fetch r.reviews rr" +
+                        " left join fetch rr.member" +
+                        " where r.id = :id", Restaurant.class)
+                        .setParameter("id", id)
+                        .getResultList();
 
-        return restaurant;
+        if(restaurants.isEmpty()){
+            return null;
+        }else{
+            return restaurants.get(0);
+        }
     }
-
 }
