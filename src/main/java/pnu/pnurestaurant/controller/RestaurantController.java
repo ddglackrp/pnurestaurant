@@ -25,7 +25,10 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
 
     @GetMapping("")
-    public String restaurants(){
+    public String restaurants(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                              Model model)
+    {
+        model.addAttribute("member",principalDetails.getMember());
         return "restaurant/foodTypeList";
     }
 
