@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pnu.pnurestaurant.Dto.MemberJoinDto;
+import pnu.pnurestaurant.Dto.request.MemberRequestDto;
 import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.service.MemberService;
 
@@ -35,20 +35,20 @@ public class LoginController {
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute @Valid MemberJoinDto memberJoinDto, BindingResult bindingResult){
+    public String join(@ModelAttribute @Valid MemberRequestDto memberRequestDto, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()){
             return "login/joinForm";
         }
 
         Member member = Member.builder()
-                .memberId(memberJoinDto.getMemberId())
-                .password(bCryptPasswordEncoder.encode(memberJoinDto.getPassword()))
-                .email(memberJoinDto.getEmail())
+                .memberId(memberRequestDto.getMemberId())
+                .password(bCryptPasswordEncoder.encode(memberRequestDto.getPassword()))
+                .email(memberRequestDto.getEmail())
                 .role("ROLE_USER")
                 .build();
 
-        memberService.join(member);
+        memberService.saveMember(member);
         return "redirect:/";
     }
 

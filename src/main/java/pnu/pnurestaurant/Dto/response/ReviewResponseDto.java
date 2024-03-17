@@ -1,20 +1,20 @@
-package pnu.pnurestaurant.Dto;
+package pnu.pnurestaurant.Dto.response;
 
 import lombok.Data;
 import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.domain.Review;
 
 @Data
-public class ReviewDto {
+public class ReviewResponseDto {
 
     private Long id;
     private Double rating;
     private String content;
     private Member member;
 
-    public ReviewDto(){}
+    public ReviewResponseDto(){}
 
-    public ReviewDto(Review review){
+    public ReviewResponseDto(Review review){
         this.id = review.getId();
         this.rating = review.getRating();
         this.content = review.getContent();

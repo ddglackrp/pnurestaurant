@@ -1,10 +1,10 @@
-package pnu.pnurestaurant.Dto;
+package pnu.pnurestaurant.Dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class MemberJoinDto {
+public class MemberRequestDto {
 
     @NotEmpty
     private String memberId;
