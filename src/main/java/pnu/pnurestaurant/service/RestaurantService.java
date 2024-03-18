@@ -30,15 +30,29 @@ public class RestaurantService {
     }
 
     public List<RestaurantResponseDto> findRestaurantsByFoodType(FoodType foodType){
-        return restaurantRepository.findByFoodType(foodType).stream()
-                .map(RestaurantResponseDto::new)
-                .collect(Collectors.toList());
+        List<Restaurant> restaurants = restaurantRepository.findByFoodType(foodType);
+
+        if(restaurants != null){
+            return restaurants.stream()
+                    .map(RestaurantResponseDto::new)
+                    .collect(Collectors.toList());
+        }
+        else{
+            return null;
+        }
     }
 
     public List<RestaurantResponseDto> findRestaurantsByName(String name) {
-        return restaurantRepository.findByNameLike(name).stream()
-                .map(RestaurantResponseDto::new)
-                .collect(Collectors.toList());
+        List<Restaurant> restaurants = restaurantRepository.findByNameLike(name);
+
+        if(restaurants != null){
+            return restaurants.stream()
+                    .map(RestaurantResponseDto::new)
+                    .collect(Collectors.toList());
+        }
+        else{
+            return null;
+        }
     }
 
     public RestaurantResponseDto findRestaurantWithRelation(Long id){

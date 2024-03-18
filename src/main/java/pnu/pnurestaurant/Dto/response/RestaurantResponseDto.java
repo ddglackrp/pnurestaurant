@@ -32,8 +32,13 @@ public class RestaurantResponseDto {
     }
 
     public void makeReviews(List<Review> reviews){
-        this.reviews = reviews.stream()
-                .map(ReviewResponseDto::new)
-                .collect(Collectors.toList());
+        if(!reviews.isEmpty()){
+            this.reviews = reviews.stream()
+                    .map(ReviewResponseDto::new)
+                    .collect(Collectors.toList());
+        }
+        else{
+            this.reviews = null;
+        }
     }
 }
