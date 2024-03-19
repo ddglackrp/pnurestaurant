@@ -1,7 +1,6 @@
 package pnu.pnurestaurant.Dto.response;
 
 import lombok.Data;
-import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.domain.Review;
 
 @Data
@@ -10,7 +9,8 @@ public class ReviewResponseDto {
     private Long id;
     private Double rating;
     private String content;
-    private Member member;
+    private Long restaurantId;
+    private Long memberId;
 
     public ReviewResponseDto(){}
 
@@ -18,7 +18,8 @@ public class ReviewResponseDto {
         this.id = review.getId();
         this.rating = review.getRating();
         this.content = review.getContent();
-        this.member = review.getMember();
+        this.restaurantId = review.getRestaurant().getId();
+        this.memberId = review.getMember().getId();
     }
 
 }
