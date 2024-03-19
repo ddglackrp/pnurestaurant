@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.Dto.response.RestaurantResponseDto;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
@@ -64,8 +65,13 @@ public class RestaurantService {
     }
 
     @Transactional
-    public void modifyRating(Long id, Double rating){
-        Restaurant findRestaurant = restaurantRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("해당 식당(게시물)이 존재하지 않습니다."));
-        findRestaurant.changeStudentRating(rating);
+    public void modifyRating(Long id){
+        Restaurant findRestaurant = restaurantRepository.findByIdWithAllRelation(id).orElseThrow(() -> new EntityNotFoundException("해당 식당(게시물)이 존재하지 않습니다."));
+
+        List<Review> reviews = findRestaurant.getReviews();
+        double sum = reviews.stream().mapToDouble(Review::getRating).sum();
+        double newRating = sum/reviews.size();
+
+        findRestaurant.changeStudentRating(newRating);
     }
 }

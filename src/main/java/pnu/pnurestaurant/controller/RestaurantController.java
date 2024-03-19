@@ -6,15 +6,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pnu.pnurestaurant.Dto.ReviewDto;
+import pnu.pnurestaurant.Dto.response.ReviewResponseDto;
+import pnu.pnurestaurant.Dto.response.RestaurantResponseDto;
 import pnu.pnurestaurant.auth.PrincipalDetails;
-import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
-import pnu.pnurestaurant.domain.restaurant.Restaurant;
 import pnu.pnurestaurant.service.RestaurantService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/restaurants")
@@ -34,35 +32,35 @@ public class RestaurantController {
 
     @GetMapping("/name")
     public String restaurantList(@RequestParam("foodname") String foodName, Model model){
-        List<Restaurant> restaurants = restaurantService.findRestaurantsByName(foodName);
+        List<RestaurantResponseDto> restaurants = restaurantService.findRestaurantsByName(foodName);
         model.addAttribute("restaurants", restaurants);
         return "restaurant/restaurantList";
     }
 
     @GetMapping("/korean")
     public String koreanList(Model model){
-        List<Restaurant> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.KOREAN);
+        List<RestaurantResponseDto> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.KOREAN);
         model.addAttribute("restaurants", restaurants);
         return "restaurant/restaurantList";
     }
 
     @GetMapping("/japanese")
     public String japaneseList(Model model){
-        List<Restaurant> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.JAPANESE);
+        List<RestaurantResponseDto> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.JAPANESE);
         model.addAttribute("restaurants", restaurants);
         return "restaurant/restaurantList";
     }
 
     @GetMapping("/chinese")
     public String chineseList(Model model){
-        List<Restaurant> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.CHINESE);
+        List<RestaurantResponseDto> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.CHINESE);
         model.addAttribute("restaurants", restaurants);
         return "restaurant/restaurantList";
     }
 
     @GetMapping("/western")
     public String westernList(Model model){
-        List<Restaurant> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.WESTERN);
+        List<RestaurantResponseDto> restaurants = restaurantService.findRestaurantsByFoodType(FoodType.WESTERN);
         model.addAttribute("restaurants", restaurants);
         return "restaurant/restaurantList";
     }
@@ -72,18 +70,13 @@ public class RestaurantController {
                              @AuthenticationPrincipal PrincipalDetails principalDetails,
                              Model model){
 
-        Restaurant findRestaurant = restaurantService.findOneWithReviews(restaurantId);
+        RestaurantResponseDto findRestaurant = restaurantService.findRestaurantWithRelation(restaurantId);
 
         model.addAttribute("restaurant", findRestaurant);
 
-        List<Review> reviews = findRestaurant.getReviews();
-        if(!reviews.isEmpty()){
-            List<ReviewDto> reviewDtos = findRestaurant.getReviews().stream()
-                    .map(r -> new ReviewDto(r))
-                    .collect(Collectors.toList());
+        List<ReviewResponseDto> reviewResponseDtos = findRestaurant.getReviews();
 
-            model.addAttribute("reviews",reviewDtos);
-        }
+        model.addAttribute("reviews", reviewResponseDtos);
 
         model.addAttribute("UserId", principalDetails.getMember().getId());
 

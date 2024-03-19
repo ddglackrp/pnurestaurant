@@ -2,7 +2,6 @@ package pnu.pnurestaurant.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +22,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -222,7 +220,7 @@ class RestaurantServiceTest {
         assertThat(testDto.getName()).isEqualTo("덮밥장사장");
         assertThat(testDto.getReviews().size()).isEqualTo(1);
         assertThat(testDto.getReviews().get(0).getContent()).isEqualTo("맛꿀마");
-        assertThat(testDto.getReviews().get(0).getMember().getMemberId()).isEqualTo("Test");
+        assertThat(testDto.getReviews().get(0).getMemberId()).isEqualTo("Test");
 
         //비정상 조회
         assertThatThrownBy(() -> restaurantService.findRestaurantWithRelation(2L))
@@ -268,16 +266,23 @@ class RestaurantServiceTest {
                 .studentRating(0.0)
                 .build();
 
-        given(restaurantRepository.findById(1L)).willReturn(Optional.of(restaurant));
-        given(restaurantRepository.findById(2L)).willReturn(Optional.ofNullable(null));
+        Review review = Review.builder()
+                .rating(2.0)
+                .content("haha")
+                .build();
+
+        review.makeRelationRestaurant(restaurant);
+
+        given(restaurantRepository.findByIdWithAllRelation(1L)).willReturn(Optional.of(restaurant));
+        given(restaurantRepository.findByIdWithAllRelation(2L)).willReturn(Optional.ofNullable(null));
 
         //when
-        restaurantService.modifyRating(1L, 2.0);
+        restaurantService.modifyRating(1L);
 
         //then
         assertThat(restaurant.getStudentRating()).isEqualTo(2.0);
 
-        assertThatThrownBy(() -> restaurantService.modifyRating(2L, 2.0))
+        assertThatThrownBy(() -> restaurantService.modifyRating(2L))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessageContaining("해당 식당(게시물)이 존재하지 않습니다.");
     }
