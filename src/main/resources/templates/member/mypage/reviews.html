@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>음식점 목록</title>
+</head>
+<body>
+<h1>음식점 목록</h1>
+<table>
+    <thead>
+    <tr>
+        <th>식당 바로가기</th>
+        <th>이름</th>
+        <th>평점</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review : ${reviews}">
+        <td>
+            <a th:href="@{/restaurants/{restaurantId}(restaurantId = ${review.restaurantId})}">
+                <span th:text="식당"></span>
+            </a>
+        </td>
+        <td th:text="${review.rating}"></td>
+        <td th:text="${review.content}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

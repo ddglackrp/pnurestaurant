@@ -10,8 +10,8 @@
 <div>
     <p>회원 이름 : <span th:text="${member.getMemberName}"></span></p>
     <p>회원 메일 : <span th:text="${member.email}"></span></p>
-    <p><a th:href="@{/member/{memberId}/reviews(memberId = ${member.getMemberName})}">내가 쓴 리뷰</a></p>
-    <p><a th:href="@{/member/{memberId}/likes(memberId = ${member.getMemberName})}">좋아요 한 맛집</a></p>
+    <p><a th:href="@{/member/{memberId}/reviews(memberId = ${member.getId})}">내가 쓴 리뷰</a></p>
+    <p><a th:href="@{/member/{memberId}/likes(memberId = ${member.getId})}">좋아요 한 맛집</a></p>
 
 </div>
 
