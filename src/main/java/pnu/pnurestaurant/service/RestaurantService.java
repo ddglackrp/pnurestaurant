@@ -2,6 +2,7 @@ package pnu.pnurestaurant.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pnu.pnurestaurant.domain.Review;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
@@ -33,27 +35,17 @@ public class RestaurantService {
     public List<RestaurantResponseDto> findRestaurantsByFoodType(FoodType foodType){
         List<Restaurant> restaurants = restaurantRepository.findByFoodType(foodType);
 
-        if(restaurants != null){
-            return restaurants.stream()
+        return restaurants.stream()
                     .map(RestaurantResponseDto::new)
                     .collect(Collectors.toList());
-        }
-        else{
-            return null;
-        }
     }
 
     public List<RestaurantResponseDto> findRestaurantsByName(String name) {
         List<Restaurant> restaurants = restaurantRepository.findByNameLike(name);
 
-        if(restaurants != null){
-            return restaurants.stream()
-                    .map(RestaurantResponseDto::new)
-                    .collect(Collectors.toList());
-        }
-        else{
-            return null;
-        }
+        return restaurants.stream()
+                .map(RestaurantResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     public RestaurantResponseDto findRestaurantWithRelation(Long id){

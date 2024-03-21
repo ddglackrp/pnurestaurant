@@ -111,7 +111,7 @@ class RestaurantServiceTest {
 
         given(restaurantRepository.findByFoodType(FoodType.KOREAN)).willReturn(restaurants);
 
-        given(restaurantRepository.findByFoodType(FoodType.CHINESE)).willReturn(null);
+        given(restaurantRepository.findByFoodType(FoodType.CHINESE)).willReturn(new ArrayList<>());
 
         //when
         //정상 테스트
@@ -122,8 +122,11 @@ class RestaurantServiceTest {
 
         //then
         assertThat(test1.size()).isEqualTo(2);
-        assertThat(test2).isNull();
+        assertThat(test2).isEmpty();
+
+
     }
+
 
     @Test
     @DisplayName("식당 조회 - 음식점 이름")
@@ -165,7 +168,7 @@ class RestaurantServiceTest {
 
         given(restaurantRepository.findByNameLike("한식")).willReturn(restaurants);
 
-        given(restaurantRepository.findByNameLike("중식")).willReturn(null);
+        given(restaurantRepository.findByNameLike("중식")).willReturn(new ArrayList<>());
 
         //when
         //정상 테스트
@@ -176,7 +179,7 @@ class RestaurantServiceTest {
 
         //then
         assertThat(test1.size()).isEqualTo(2);
-        assertThat(test2).isNull();
+        assertThat(test2).isEmpty();
     }
 
     @Test
@@ -184,7 +187,7 @@ class RestaurantServiceTest {
     void test4(){
         //given
         Member member = Member.builder()
-                .memberId("Test")
+                .memberName("Test")
                 .password("1234")
                 .email("test@pusan.ac.kr")
                 .role("USER")
@@ -220,12 +223,12 @@ class RestaurantServiceTest {
         assertThat(testDto.getName()).isEqualTo("덮밥장사장");
         assertThat(testDto.getReviews().size()).isEqualTo(1);
         assertThat(testDto.getReviews().get(0).getContent()).isEqualTo("맛꿀마");
-        assertThat(testDto.getReviews().get(0).getMemberId()).isEqualTo("Test");
 
         //비정상 조회
         assertThatThrownBy(() -> restaurantService.findRestaurantWithRelation(2L))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessageContaining("해당 식당(게시물)이 존재하지 않습니다.");
+
     }
 
     @Test
@@ -249,7 +252,7 @@ class RestaurantServiceTest {
         RestaurantResponseDto testDto = restaurantService.findRestaurantWithRelation(1L);
 
         assertThat(testDto.getName()).isEqualTo("덮밥장사장");
-        assertThat(testDto.getReviews()).isNull();
+        assertThat(testDto.getReviews()).isEmpty();
     }
 
     @Test

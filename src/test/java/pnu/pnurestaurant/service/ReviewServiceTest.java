@@ -51,7 +51,7 @@ class ReviewServiceTest {
                 .build();
 
         Member member = Member.builder()
-                .memberId("test")
+                .memberName("test")
                 .password("1234")
                 .email("test@pusan.ac.kr")
                 .role("USER")
@@ -67,7 +67,7 @@ class ReviewServiceTest {
         given(reviewRepository.save(any(Review.class))).willReturn(null);
 
         //when
-        reviewService.saveReview(reviewRequestDto, member, 1L);
+        reviewService.saveReview(reviewRequestDto, member, restaurant.getId());
 
         //then
         then(restaurantRepository).should().findById(restaurant.getId());

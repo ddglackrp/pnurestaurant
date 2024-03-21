@@ -1,6 +1,5 @@
 package pnu.pnurestaurant.Dto.response;
 
-import lombok.Builder;
 import lombok.Data;
 import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
@@ -32,13 +31,8 @@ public class RestaurantResponseDto {
     }
 
     public void makeReviews(List<Review> reviews){
-        if(!reviews.isEmpty()){
-            this.reviews = reviews.stream()
-                    .map(ReviewResponseDto::new)
-                    .collect(Collectors.toList());
-        }
-        else{
-            this.reviews = null;
-        }
+        this.reviews = reviews.stream()
+                .map(ReviewResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
