@@ -1,7 +1,6 @@
 package pnu.pnurestaurant.auth;
 
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import pnu.pnurestaurant.domain.Member;
@@ -37,7 +36,7 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return member.getMemberId();
+        return member.getMemberName();
     }
 
     @Override

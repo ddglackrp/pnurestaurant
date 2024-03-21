@@ -1,9 +1,7 @@
 package pnu.pnurestaurant.repository;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,7 @@ public class JpaRepositoryTest {
     void restaurantTest(){
         //given
         Member member = Member.builder()
-                .memberId("Test")
+                .memberName("Test")
                 .password("1234")
                 .email("test@pusan.ac.kr")
                 .role("USER")
@@ -82,7 +80,7 @@ public class JpaRepositoryTest {
         assertThat(test.getReviews().size()).isEqualTo(1);
         assertThat(test.getReviews().get(0).getRating()).isEqualTo(4.3);
         assertThat(test.getReviews().get(0).getContent()).isEqualTo("맛꿀마");
-        assertThat(test.getReviews().get(0).getMember().getMemberId()).isEqualTo("Test");
+        assertThat(test.getReviews().get(0).getMember().getMemberName()).isEqualTo("Test");
     }
 
     @Test
@@ -90,7 +88,7 @@ public class JpaRepositoryTest {
     void reviewTest(){
         //given
         Member member = Member.builder()
-                .memberId("Test")
+                .memberName("Test")
                 .password("1234")
                 .email("test@pusan.ac.kr")
                 .role("USER")
@@ -129,6 +127,6 @@ public class JpaRepositoryTest {
         Review test = reviews.get();
         assertThat(test.getRating()).isEqualTo(4.3);
         assertThat(test.getRestaurant().getId()).isEqualTo(restaurant.getId());
-        assertThat(test.getMember().getMemberId()).isEqualTo("Test");
+        assertThat(test.getMember().getMemberName()).isEqualTo("Test");
     }
 }

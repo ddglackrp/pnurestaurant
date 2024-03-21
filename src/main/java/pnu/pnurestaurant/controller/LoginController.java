@@ -42,7 +42,7 @@ public class LoginController {
         }
 
         Member member = Member.builder()
-                .memberId(memberRequestDto.getMemberId())
+                .memberName(memberRequestDto.getMemberId())
                 .password(bCryptPasswordEncoder.encode(memberRequestDto.getPassword()))
                 .email(memberRequestDto.getEmail())
                 .role("ROLE_USER")

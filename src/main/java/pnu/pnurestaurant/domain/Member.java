@@ -12,7 +12,7 @@ public class Member {
     private Long id;
 
     @Column(unique = true)
-    private String memberId;
+    private String memberName;
 
     private String password;
     private String email;
@@ -22,8 +22,8 @@ public class Member {
     }
 
     @Builder
-    public Member(String memberId, String password, String email, String role) {
-        this.memberId = memberId;
+    public Member(String memberName, String password, String email, String role) {
+        this.memberName = memberName;
         this.password = password;
         this.email = email;
         this.role = role;
