@@ -3,6 +3,9 @@ package pnu.pnurestaurant.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class Member {
@@ -17,6 +20,9 @@ public class Member {
     private String password;
     private String email;
     private String role;
+
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviews = new ArrayList<>();
 
     public Member() {
     }
