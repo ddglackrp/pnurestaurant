@@ -21,5 +21,4 @@ public class ReviewResponseDto {
         this.restaurantId = review.getRestaurant().getId();
         this.memberId = review.getMember().getId();
     }
-
 }
