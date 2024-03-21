@@ -5,13 +5,14 @@
     <title>음식점 목록</title>
 </head>
 <body>
+
+
+<h1>음식점 목록</h1>
+
 <form th:action="@{/restaurants/name}" method="get">
     <input type="text" name="foodname" placeholder="식당 이름 검색">
     <button type="submit">검색</button>
 </form>
-
-<h1>음식점 목록</h1>
-
 
 <ul>
     <li>
@@ -27,5 +28,9 @@
         <button  th:onclick="|location.href='@{/restaurants/western}'|">양식</button>
     </li>
 </ul>
+
+<div>
+    <a th:href="@{/member/{memberId}(memberId = ${member.id})}"> 마이페이지 </a>
+</div>
 </body>
 </html>

@@ -9,7 +9,7 @@
 
 <div>
     <h3>음식점 이름: <span th:text="${restaurant.name}"></span></h3>
-    <p>음식점 주소: <span th:text="${restaurant.address}"></span></p>
+    <p>음식점 주소: <span th:text="${restaurant.locationId}"></span></p>
     <p>음식점 구글 평점: <span th:text="${restaurant.googleRating}"></span></p>
     <p>음식점 카카오 평점: <span th:text="${restaurant.kakaoRating}"></span></p>
     <p>음식점 학생 평점: <span th:text="${restaurant.studentRating}"></span></p>
@@ -21,7 +21,7 @@
 <div th:each="review : ${reviews}">
     <p>평점: <span th:text="${review.rating}"></span></p>
     <p>리뷰 내용: <span th:text="${review.content}"></span></p>
-    <div th:if="${review.member.id == UserId}">
+    <div th:if="${review.memberId == UserId}">
         <a th:href="@{/review/edit/{reviewId}(reviewId=${review.id})}">수정</a>
         <form th:action="@{/review/delete/{reviewId}(reviewId=${review.id})}" method="POST">
             <input type="hidden" name="restaurantId" th:value="${restaurant.id}">
