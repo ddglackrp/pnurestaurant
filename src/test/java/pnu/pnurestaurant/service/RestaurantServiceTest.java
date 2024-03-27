@@ -8,13 +8,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import pnu.pnurestaurant.Dto.response.RestaurantResponseDto;
+import pnu.pnurestaurant.Dto.response.RestaurantWithReviewsDto;
+import pnu.pnurestaurant.Dto.response.ReviewResponseDto;
 import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.Address;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
 import pnu.pnurestaurant.repository.RestaurantRepository;
+import pnu.pnurestaurant.repository.ReviewRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +29,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +41,9 @@ class RestaurantServiceTest {
 
     @Mock
     private RestaurantRepository restaurantRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @Test
     @DisplayName("식당 조회 - 단건")
@@ -288,6 +299,66 @@ class RestaurantServiceTest {
         assertThatThrownBy(() -> restaurantService.modifyRating(2L))
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasMessageContaining("해당 식당(게시물)이 존재하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("식당 조회 review page 기능")
+    void test7(){
+        //given
+        Restaurant restaurant = Restaurant.builder()
+                .name("덮밥장사장")
+                .foodType(FoodType.KOREAN)
+                .address(new Address("1992050396"))
+                .restaurantPictureUrl("일단 보류")
+                .kakaoRating(5.0)
+                .googleRating(4.0)
+                .studentRating(0.0)
+                .build();
+
+        List<Review> reviews = new ArrayList<>();
+
+        for(int i=0; i<20; i++){
+            Review review = Review.builder()
+                    .rating(4.3)
+                    .content("맛꿀마 " + i)
+                    .reviewPictureUrl("일단 보류")
+                    .build();
+
+            Member member = Member.builder()
+                    .memberName("Test " + i)
+                    .password("1234")
+                    .email("test@pusan.ac.kr")
+                    .role("USER")
+                    .build();
+
+            review.makeRelationMember(member);
+            review.makeRelationRestaurant(restaurant);
+            reviews.add(review);
+        }
+
+        PageRequest pageRequest = PageRequest.of(0, 5,
+                Sort.by(Sort.Direction.DESC,"createdAt"));
+
+        given(restaurantRepository.findById(1L)).willReturn(Optional.of(restaurant));
+
+        given(reviewRepository.findReviewsByRestaurantId(1L, pageRequest))
+                .willReturn(new PageImpl<>(reviews.subList(0, 5), pageRequest, reviews.size()));
+
+        //when
+        RestaurantWithReviewsDto restaurantWithReviews = restaurantService.getRestaurantWithReviews(1L, pageRequest);
+
+        //then
+        String name = restaurantWithReviews.getName();
+        Page<ReviewResponseDto> reviewpage = restaurantWithReviews.getReviews();
+        List<ReviewResponseDto> content = reviewpage.getContent();
+
+        assertThat(name).isEqualTo("덮밥장사장");
+        assertThat(reviewpage.getTotalElements()).isEqualTo(20);
+        assertThat(reviewpage.getTotalPages()).isEqualTo(4);
+        assertThat(reviewpage.isFirst()).isTrue();
+        assertThat(reviewpage.hasNext()).isTrue();
+        assertThat(content.size()).isEqualTo(5);
+        assertThat(content.get(4).getContent()).isEqualTo("맛꿀마 4");
     }
 
 }
