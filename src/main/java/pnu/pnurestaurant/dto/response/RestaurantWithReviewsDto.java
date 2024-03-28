@@ -1,12 +1,10 @@
-package pnu.pnurestaurant.Dto.response;
+package pnu.pnurestaurant.dto.response;
 
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
-
-import java.util.List;
 
 @Data
 public class RestaurantWithReviewsDto {

@@ -12,9 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import pnu.pnurestaurant.Dto.response.RestaurantResponseDto;
-import pnu.pnurestaurant.Dto.response.RestaurantWithReviewsDto;
-import pnu.pnurestaurant.Dto.response.ReviewResponseDto;
+import pnu.pnurestaurant.dto.response.RestaurantResponseDto;
+import pnu.pnurestaurant.dto.response.RestaurantWithReviewsDto;
+import pnu.pnurestaurant.dto.response.ReviewResponseDto;
 import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.Address;
@@ -29,7 +29,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)

@@ -5,14 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pnu.pnurestaurant.Dto.response.MemberResponseDto;
-import pnu.pnurestaurant.Dto.response.ReviewResponseDto;
+import pnu.pnurestaurant.dto.response.MemberResponseDto;
+import pnu.pnurestaurant.dto.response.ReviewResponseDto;
 import pnu.pnurestaurant.domain.Member;
-import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.repository.MemberRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

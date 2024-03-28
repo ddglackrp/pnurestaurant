@@ -12,7 +12,7 @@ import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.Address;
 import pnu.pnurestaurant.domain.restaurant.FoodType;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
-import pnu.pnurestaurant.Dto.request.ReviewRequestDto;
+import pnu.pnurestaurant.dto.request.ReviewRequestDto;
 import pnu.pnurestaurant.repository.RestaurantRepository;
 import pnu.pnurestaurant.repository.ReviewRepository;
 

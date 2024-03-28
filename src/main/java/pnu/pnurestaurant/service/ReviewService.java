@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pnu.pnurestaurant.domain.Member;
 import pnu.pnurestaurant.domain.Review;
 import pnu.pnurestaurant.domain.restaurant.Restaurant;
-import pnu.pnurestaurant.Dto.request.ReviewRequestDto;
-import pnu.pnurestaurant.Dto.response.ReviewResponseDto;
+import pnu.pnurestaurant.dto.request.ReviewRequestDto;
+import pnu.pnurestaurant.dto.response.ReviewResponseDto;
 import pnu.pnurestaurant.repository.RestaurantRepository;
 import pnu.pnurestaurant.repository.ReviewRepository;
 

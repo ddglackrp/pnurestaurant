@@ -1,4 +1,4 @@
-package pnu.pnurestaurant.Dto.response;
+package pnu.pnurestaurant.dto.response;
 
 import lombok.Data;
 import pnu.pnurestaurant.domain.Review;

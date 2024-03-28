@@ -1,17 +1,13 @@
 package pnu.pnurestaurant.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import pnu.pnurestaurant.Dto.response.MemberResponseDto;
-import pnu.pnurestaurant.Dto.response.ReviewResponseDto;
-import pnu.pnurestaurant.auth.PrincipalDetails;
-import pnu.pnurestaurant.domain.Member;
+import pnu.pnurestaurant.dto.response.MemberResponseDto;
+import pnu.pnurestaurant.dto.response.ReviewResponseDto;
 import pnu.pnurestaurant.service.MemberService;
 
 import java.util.List;

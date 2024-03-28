@@ -1,4 +1,4 @@
-package pnu.pnurestaurant.Dto.request;
+package pnu.pnurestaurant.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
